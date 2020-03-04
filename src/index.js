@@ -7,6 +7,7 @@ const session = require('express-session');
 
 // Initializations
 const app = express();
+require('./database');
 
 // Settings
 app.set('port', process.env.PORT || 3000);
@@ -26,7 +27,7 @@ app.use(session({
     secret: 'mysecretapp',
     resave: true,
     saveUninitialized: true
-}))
+}));
 
 // Global Variables
 
@@ -36,10 +37,11 @@ app.use(require('./routes/users'));
 app.use(require('./routes/notes'));
 
 // Static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Server is listenning
 app.listen(app.get('port'), () => {
-    console.log('Servidor en le puerto', app.get('port'));
+    console.log('Servidor en el puerto', app.get('port'));
 });
 
 
